@@ -1,0 +1,3 @@
+0 tomato
+1 paddy
+2 other
