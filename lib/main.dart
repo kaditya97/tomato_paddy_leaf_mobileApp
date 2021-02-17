@@ -15,6 +15,7 @@ class _MyAppState extends State<MyApp> {
   List _outputs;
   File _image;
   bool _loading = false;
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -87,7 +88,9 @@ class _MyAppState extends State<MyApp> {
                 getImageFromCam();
               },
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             SimpleDialogOption(
               child: Text("Open Gallery"),
               onPressed: () {
@@ -96,7 +99,11 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             SimpleDialogOption(
-              child: Text("Cancel", textAlign: TextAlign.center, style: TextStyle(color: Colors.blue),),
+              child: Text(
+                "Cancel",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.blue),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -108,7 +115,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   pickImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var img = await picker.getImage(source: ImageSource.gallery);
+    var image = File(img.path);
     if (image == null) return null;
     setState(() {
       _loading = true;
@@ -118,7 +126,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future getImageFromCam() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var img = await picker.getImage(source: ImageSource.camera);
+    var image = File(img.path);
     if (image == null) return null;
     setState(() {
       _loading = true;
